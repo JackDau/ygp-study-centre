@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import pypdf; print\\('pypdf available'\\)\")",
+      "Bash(pdftotext \"Goals 2025.pdf\" -)",
+      "Bash(pdftotext \"Leadership at YourGP.pdf\" -)",
+      "Bash(pdftotext \"Organisational Chart March 2026.pdf\" -)",
+      "Bash(pdftotext \"YourGP - Clarity \\(The Advantage\\).pdf\" -)",
+      "Bash(pdftotext \"YourGP - Values & Outcome Matrix.pdf\" -)",
+      "Bash(pdftotext \"YourGP - Who We Are.pdf\" -)",
+      "Bash(pdftotext \"C:\\\\Users\\\\jackd\\\\OneDrive - YourGP\\\\The New Playbook - Strategy Documents\\\\Goals 2025.pdf\" -)",
+      "Bash(pdftotext:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "open-brain"
+  ]
+}
