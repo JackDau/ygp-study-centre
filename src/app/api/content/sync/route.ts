@@ -78,6 +78,14 @@ export async function POST(request: NextRequest) {
       .in("id", existingIds);
   }
 
+  const canGenerateQuestions = !!process.env.ANTHROPIC_API_KEY;
+  if (!canGenerateQuestions) {
+    console.warn(
+      "ANTHROPIC_API_KEY is not set — chunks will sync but no questions will be generated. " +
+        "Add the key to .env.local and re-sync to generate questions."
+    );
+  }
+
   // Insert new chunks and generate questions
   let questionsGenerated = 0;
   for (let i = 0; i < chunks.length; i++) {
@@ -109,7 +117,7 @@ export async function POST(request: NextRequest) {
         .select()
         .single();
 
-      if (newChunk) {
+      if (newChunk && canGenerateQuestions) {
         // Generate quiz questions for new/changed chunks
         try {
           const questions = await generateQuizQuestions(
@@ -156,5 +164,6 @@ export async function POST(request: NextRequest) {
     changed: true,
     chunksCreated: chunks.length,
     questionsGenerated,
+    questionGenerationSkipped: !canGenerateQuestions,
   });
 }

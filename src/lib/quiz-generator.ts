@@ -7,19 +7,26 @@ interface GeneratedQuestion {
   explanation: string;
 }
 
-const client = new Anthropic();
-
 /**
  * Generate quiz questions for a chunk of content using Claude API.
  * Returns 3 multiple-choice questions per chunk.
+ * Throws a descriptive error if ANTHROPIC_API_KEY is not set.
  */
 export async function generateQuizQuestions(
   chunkTitle: string,
   chunkContent: string,
   moduleTitle: string
 ): Promise<GeneratedQuestion[]> {
+  if (!process.env.ANTHROPIC_API_KEY) {
+    throw new Error(
+      "ANTHROPIC_API_KEY is not set. Add it to .env.local to enable AI question generation."
+    );
+  }
+
+  const client = new Anthropic();
+
   const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: "claude-sonnet-4-6",
     max_tokens: 2000,
     messages: [
       {
